@@ -24,23 +24,22 @@ This repository contains both the data and the scripts used for generation and a
 ```bash
 RockMicro_Minkowskis/
 │
-├── data/                                      # Main dataset (CSV files with Minkowski + flow results)
-│   ├── cemented/                              # Cemented configurations (reduced connectivity)
+├── data/                                      # Main dataset
+│   ├── cemented/                              # Cemented configurations 
 │       ├── 2D/                                # In two dimensions
-│           ├── blob_images/                   # Varying diameter over the structure
-│           ├── simulation_results/            # Varying diameter over the structure
+│           ├── blob_images/                   # Data to (re)create the blobbed images
+│           ├── simulation_results/            # The results of the simulations of the hydraulic properties
 │   └── random_packings/                       # Random particle packings (all shapes, packing fractions)
 │       ├── 2D/                                # In two dimensions
 │           ├── heterogeneous_diameter/        # Varying diameter over the structure
-│               ├── Circle_data/               # Data of the coordinates and radius of a random grid
-│               ├── Circle_data_structured/    # Data of the coordinates and radius of the structured grid
-│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│               ├── Circle_data/               # Data of the coordinates and radius of a random grid]
+│               ├── simulation_results/        
 │           ├── homogeneous_diameter/          # Constant diameter over the structure
-│               ├── Circle_data/               # Data of the coordinates and radius of a random grid
-│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│               ├── Circle_data/
+│               ├── circle_data_structured/    # Data of the coordinates and radius of the structured grid
+│               ├── simulation_results/        
 │       ├── 3D/                                # In three dimensions
-│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
-│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│               ├── simulation_results/        
 │               ├── Sphere_data/               # Data of the hydraulic properties related to the circle data
 │
 ├── scripts/                   # Python scripts for geometry generation and analysis
@@ -54,14 +53,19 @@ RockMicro_Minkowskis/
 │
 └── README.md                  # This file
 ```
-## Software requirements
-The Python scripts rely on the following packages and dependencies:
-- PoreSpy       – microstructure generation and analysis
-- Gmsh          – meshing of generated geometries
-- OpenMC        – (used for geometry sampling / utilities)
-- NumPy, pandas – data handling
 
-For flow simulations, we use the MOOSE framework to solve the incompressible Stokes equations on the generated meshes
+## Software requirements
+The Python scripts rely on the following packages and dependencies:  
+- [PoreSpy](https://porespy.org/) – microstructure generation and analysis  
+- [Gmsh](https://gmsh.info/) – meshing of generated geometries  
+- [OpenMC](https://openmc.org/) – (used for geometry sampling / utilities)  
+- [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/) – data handling  
+
+For flow simulations, we use the [MOOSE framework](https://mooseframework.inl.gov/) to solve the incompressible Stokes equations on the generated meshes.  
 
 ## Contributing
-Currently, the main contributors are W. Lindqwister, M. Lesueur and S. Zwarts. 
+Currently, the main contributors are:
+
+- [S. Zwarts]([https://scholar.google.com/citations?hl=en&user=tFDIX40AAAAJ](https://scholar.google.com/citations?hl=en&user=tFDIX40AAAAJ))
+- [W. Lindqwister](https://scholar.google.com/citations?view_op=search_authors&mauthors=winston+lindqwister&hl=en&oi=ao)
+- [M. Lesueur](https://scholar.google.com/citations?hl=en&user=Rt6zNgkAAAAJ)
