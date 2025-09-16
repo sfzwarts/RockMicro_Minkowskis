@@ -34,7 +34,7 @@ In the database, the filenames of the random packings will have the following se
 
 <figure>
   <p float="left">
-    <img src="Images/Minkowski_functionals.png" width="700" />
+    <img src="../Images/Minkowski_functionals.png" width="700" />
   </p>
   <figcaption align="center">
     Visualisation of different grain shapes inscribed in the circle, at a certain rotation, here shown as beta_1 = 0, alligned with the flow direction
