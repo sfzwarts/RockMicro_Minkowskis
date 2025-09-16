@@ -18,6 +18,18 @@ The dataset is designed to explore the relationship between microstructural feat
   </figcaption>
 </figure>
 
+The Different Minkowski functionals are shown in the image below, and consist of the porosity, surface area, mean curvature and Euler characteristic
+
+<figure>
+  <p float="left">
+    <img src="Images/Minkowski_functionals.png" width="350" />
+  </p>
+  <figcaption align="center">
+    Visualisation of the different Minkowski Functionals
+  </figcaption>
+</figure>
+
+
 This repository contains both the data and the scripts used for generation and analysis.
 
 ## Dataset structure
