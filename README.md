@@ -14,18 +14,30 @@ The dataset is designed to explore the relationship between microstructural feat
 </p>
 
 This repository contains both the data and the scripts used for generation and analysis.
+
+## Dataset structure
+```bash
 RockMicro_Minkowskis/
-
 │
-├── data/                     # Main dataset (CSV files with Minkowski + flow results)
-│   ├── cemented/
-│   ├── random_packings/
+├── data/                      # Main dataset (CSV files with Minkowski + flow results)
+│   ├── cemented/              # Cemented configurations (reduced connectivity)
+│   └── random_packings/       # Random particle packings (all shapes, packing fractions)
 │
-├── scripts/                  # Python scripts for geometry generation and analysis
+├── scripts/                   # Python scripts for geometry generation and analysis
+│   ├── generate_structures.py
+│   ├── compute_minkowskis.py
+│   └── run_stokes_moose.py
 │
-├── Simuation_files/          # Example for simulation input files for MOOSE
-
-
+├── Simulation_files/          # Example input files for Stokes flow simulations in MOOSE
+│   ├── stokes_input.i
+│   └── mesh_example.e
+│
+├── images/                    # Example figures for README and docs
+│   ├── example_microstructure.png
+│   └── example_flowfield.png
+│
+└── README.md                  # This file
+```
 ## Software requirements
 The Python scripts rely on the following packages and dependencies:
 - PoreSpy       – microstructure generation and analysis
