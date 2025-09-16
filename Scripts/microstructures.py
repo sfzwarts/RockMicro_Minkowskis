@@ -89,11 +89,10 @@ def create_effective_por(image_path):
     name_without_ext = os.path.splitext(base_name)[0]
 
     plt.figure(figsize=[7.2, 7.2])
-    plt.axis('off')  # not just plt.axis(False)
+    plt.axis('off')
     plt.imshow(existing_image, cmap='gray')
     plt.clf()
     
-    # Define inlets and outlets
     inlets = np.zeros_like(existing_image)
     inlets[0, :] = True
     outlets = np.zeros_like(existing_image)

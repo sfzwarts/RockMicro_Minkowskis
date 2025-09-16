@@ -22,7 +22,7 @@ The Different Minkowski functionals are shown in the image below, and consist of
 
 <figure>
   <p float="left">
-    <img src="Images/Minkowski_functionals.png" width="350" />
+    <img src="Images/Minkowski_functionals.png" width="700" />
   </p>
   <figcaption align="center">
     Visualisation of the different Minkowski Functionals
