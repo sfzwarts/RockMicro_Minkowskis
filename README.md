@@ -8,21 +8,20 @@ The dataset is designed to explore the relationship between microstructural feat
 - Packing fraction: systematically varied to capture pore-scale transitions
 - Connectivity: cemented configurations are included to study reduced connectivity
 
-![Example of random Packing](Data/random_packings/2D/homogenous_diameter/Circle_data/Model_1_pf_0.400.png)
-![Example of cemented microstructure](Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png)
+<p float="left">
+  <img src="Data/random_packings/2D/homogenous_diameter/Circle_data/Model_1_pf_0.380_circle_extra_1_beta_0.png" width="350" />
+  <img src="Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png" width="350" /> 
+</p>
 
 This repository contains both the data and the scripts used for generation and analysis.
 RockMicro_Minkowskis/
+
 │
 ├── data/                     # Main dataset (CSV files with Minkowski + flow results)
 │   ├── cemented/
 │   ├── random_packings/
 │
 ├── scripts/                  # Python scripts for geometry generation and analysis
-│   ├── __init__.py
-│   ├── meshing.py
-│   └── microstructures.py
-│   └── postprocessing.py
 │
 ├── Simuation_files/          # Example for simulation input files for MOOSE
 
