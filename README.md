@@ -42,16 +42,16 @@ RockMicro_Minkowskis/
 │               ├── simulation_results/        
 │               ├── Sphere_data/               # Data of the hydraulic properties related to the circle data
 │
-├── scripts/                   # Python scripts for geometry generation and analysis
+├── scripts/                                   # Python scripts for geometry generation and analysis
 │   ├── meshing.py
 │   ├── microstructures.py
 │   └── postprocessing.py
 │
-├── Simulation_files/          # Example input files for Stokes flow simulations in MOOSE
+├── Simulation_files/                          # Example input files for Stokes flow simulations in MOOSE
 │   ├── stokes_input.i
 │   └── mesh_example.e
 │
-└── README.md                  # This file
+└── README.md                                  # This file
 ```
 
 ## Software requirements
@@ -66,6 +66,6 @@ For flow simulations, we use the [MOOSE framework](https://mooseframework.inl.go
 ## Contributing
 Currently, the main contributors are:
 
-- [S. Zwarts]([https://scholar.google.com/citations?hl=en&user=tFDIX40AAAAJ](https://scholar.google.com/citations?hl=en&user=tFDIX40AAAAJ))
+- [S. Zwarts](https://scholar.google.com/citations?hl=en&user=tFDIX40AAAAJ)
 - [W. Lindqwister](https://scholar.google.com/citations?view_op=search_authors&mauthors=winston+lindqwister&hl=en&oi=ao)
 - [M. Lesueur](https://scholar.google.com/citations?hl=en&user=Rt6zNgkAAAAJ)
