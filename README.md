@@ -8,10 +8,15 @@ The dataset is designed to explore the relationship between microstructural feat
 - Packing fraction: systematically varied to capture pore-scale transitions
 - Connectivity: cemented configurations are included to study reduced connectivity
 
-<p float="left">
-  <img src="Data/random_packings/2D/homogenous_diameter/Circle_data/Model_1_pf_0.380_circle_extra_1_beta_0.png" width="350" />
-  <img src="Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png" width="350" /> 
-</p>
+<figure>
+  <p float="left">
+    <img src="Data/random_packings/2D/homogenous_diameter/Circle_data/Model_1_pf_0.380_circle_extra_1_beta_0.png" width="350" />
+    <img src="Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png" width="350" /> 
+  </p>
+  <figcaption align="center">
+    Example microstructures: (left) random packing of circular particles, (right) cemented configuration with reduced connectivity.
+  </figcaption>
+</figure>
 
 This repository contains both the data and the scripts used for generation and analysis.
 
@@ -19,22 +24,33 @@ This repository contains both the data and the scripts used for generation and a
 ```bash
 RockMicro_Minkowskis/
 │
-├── data/                      # Main dataset (CSV files with Minkowski + flow results)
-│   ├── cemented/              # Cemented configurations (reduced connectivity)
-│   └── random_packings/       # Random particle packings (all shapes, packing fractions)
+├── data/                                      # Main dataset (CSV files with Minkowski + flow results)
+│   ├── cemented/                              # Cemented configurations (reduced connectivity)
+│       ├── 2D/                                # In two dimensions
+│           ├── blob_images/                   # Varying diameter over the structure
+│           ├── simulation_results/            # Varying diameter over the structure
+│   └── random_packings/                       # Random particle packings (all shapes, packing fractions)
+│       ├── 2D/                                # In two dimensions
+│           ├── heterogeneous_diameter/        # Varying diameter over the structure
+│               ├── Circle_data/               # Data of the coordinates and radius of a random grid
+│               ├── Circle_data_structured/    # Data of the coordinates and radius of the structured grid
+│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│           ├── homogeneous_diameter/          # Constant diameter over the structure
+│               ├── Circle_data/               # Data of the coordinates and radius of a random grid
+│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│       ├── 3D/                                # In three dimensions
+│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│               ├── simulation_results/        # Data of the hydraulic properties related to the circle data
+│               ├── Sphere_data/               # Data of the hydraulic properties related to the circle data
 │
 ├── scripts/                   # Python scripts for geometry generation and analysis
-│   ├── generate_structures.py
-│   ├── compute_minkowskis.py
-│   └── run_stokes_moose.py
+│   ├── meshing.py
+│   ├── microstructures.py
+│   └── postprocessing.py
 │
 ├── Simulation_files/          # Example input files for Stokes flow simulations in MOOSE
 │   ├── stokes_input.i
 │   └── mesh_example.e
-│
-├── images/                    # Example figures for README and docs
-│   ├── example_microstructure.png
-│   └── example_flowfield.png
 │
 └── README.md                  # This file
 ```
