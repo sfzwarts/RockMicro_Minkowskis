@@ -1,12 +1,34 @@
-# RockMicro_Minkowskis
+# ROCK MICROstructures and the MINKWOSKI functionals
 
 ## Description
-RockMicro_Minkowskis is an open-source database of generated rock microstructures with computed Minkowski functionals and corresponding Stokes flow simulation results.
+RockMicro_Minkowskis is an open-source database of generated rock microstructures with computed [Minkowski functionals](https://en.wikipedia.org/wiki/Minkowski_functional) and corresponding Stokes flow simulation results.
 
-The dataset is designed to explore the relationship between microstructural features and macroscopic transport properties, with controlled variation in:
-- Particle shape: circles, rectangles, ellipses, triangles
-- Packing fraction: systematically varied to capture pore-scale transitions
-- Connectivity: cemented configurations are included to study reduced connectivity
+Minkowski functionals are a set of measures used to quantify the geometric and topological features of a microstructure. The different Minkowski functionals are shown in the image below, and consist of the porosity, surface area, mean curvature (for 3D structures) and Euler characteristic
+
+<figure>
+  <p float="left">
+    <img src="Images/Minkowski_functionals.png" width="700" />
+  </p>
+  <figcaption align="center">
+    Visualisation of the different Minkowski Functionals
+  </figcaption>
+</figure>
+
+The dataset includes random packings of particles, which serve as a canonical model for studying pore-scale structures.  
+Random packings are widely used in digital rock physics because they capture key aspects of granular media while allowing systematic control of the packing fraction (the ratio of solid to pore space).  
+
+To extend the diversity of microstructures, we also generated non-circular shapes:  
+- 2D: rectangles, ellipses, triangles  
+- 3D: boxes, pyramids  
+
+These shapes were constructed by inscribing each particle within a circle or sphere, ensuring that the packings remain non-overlapping and directly comparable across different geometries.  
+
+This approach enables a consistent study of how particle shape, in addition to packing density, influences both Minkowski functionals and macroscopic transport properties such as permeability and tortuosity.  
+
+The dataset is designed to explore the relationship between microstructural features and macroscopic transport properties, with controlled variation in:  
+- Particle shape: circles, rectangles, ellipses, triangles (2D), pyramids and boxes (3D)  
+- Packing fraction: systematically varied to capture pore-scale transitions  
+- Connectivity: cemented configurations are included to study reduced connectivity  
 
 <figure>
   <p float="left">
@@ -15,17 +37,6 @@ The dataset is designed to explore the relationship between microstructural feat
   </p>
   <figcaption align="center">
     Example microstructures: (left) random packing of circular particles, (right) cemented configuration with reduced connectivity.
-  </figcaption>
-</figure>
-
-The Different Minkowski functionals are shown in the image below, and consist of the porosity, surface area, mean curvature and Euler characteristic
-
-<figure>
-  <p float="left">
-    <img src="Images/Minkowski_functionals.png" width="700" />
-  </p>
-  <figcaption align="center">
-    Visualisation of the different Minkowski Functionals
   </figcaption>
 </figure>
 
