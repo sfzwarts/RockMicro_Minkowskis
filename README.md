@@ -7,7 +7,7 @@ Minkowski functionals are a set of measures used to quantify the geometric and t
 
 <figure>
   <p float="left">
-    <img src="Images/Minkowski_functionals.png" width="700" />
+    <img src="README_images/Minkowski_functionals.png" width="700" />
   </p>
   <figcaption align="center">
     Visualisation of the different Minkowski Functionals
@@ -17,9 +17,9 @@ Minkowski functionals are a set of measures used to quantify the geometric and t
 The dataset includes random packings of particles, which serve as a canonical model for studying pore-scale structures.  
 Random packings are widely used in digital rock physics because they capture key aspects of granular media while allowing systematic control of the packing fraction (the ratio of solid to pore space).  
 
-To extend the diversity of microstructures, we also generated non-circular shapes:  
-- 2D: rectangles, ellipses, triangles  
-- 3D: boxes, pyramids  
+To extend the diversity of microstructures, we also generated the following shapes:  
+- 2D: circles, rectangles, ellipses, triangles  
+- 3D: spheres, boxes, pyramids  
 
 These shapes were constructed by inscribing each particle within a circle or sphere, ensuring that the packings remain non-overlapping and directly comparable across different geometries.  
 
@@ -28,7 +28,7 @@ This approach enables a consistent study of how particle shape, in addition to p
 The dataset is designed to explore the relationship between microstructural features and macroscopic transport properties, with controlled variation in:  
 - Particle shape: circles, rectangles, ellipses, triangles (2D), pyramids and boxes (3D)  
 - Packing fraction: systematically varied to capture pore-scale transitions  
-- Connectivity: cemented configurations are included to study reduced connectivity  
+- Connectivity: cemented configurations are included to study reduced connectivity
 
 <figure>
   <p float="left">
