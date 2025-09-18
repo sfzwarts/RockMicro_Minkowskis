@@ -12,6 +12,7 @@ from skimage import io, color, measure
 from skimage.draw import polygon
 from skimage.measure import euler_number
 from PIL import Image
+import mpimg
 
 # Domain-specific libraries
 import openmc

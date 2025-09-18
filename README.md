@@ -10,12 +10,11 @@ Minkowski functionals are a set of measures used to quantify the geometric and t
     <img src="README_images/Minkowski_functionals.png" width="700" />
   </p>
   <figcaption align="center">
-    Visualisation of the different Minkowski Functionals
   </figcaption>
 </figure>
 
-The dataset includes random packings of particles, which serve as a canonical model for studying pore-scale structures.  
-Random packings are widely used in digital rock physics because they capture key aspects of granular media while allowing systematic control of the packing fraction (the ratio of solid to pore space).  
+
+The dataset includes random packings of particles, which serve as a canonical model for studying pore-scale structures. Random packings are widely used in digital rock physics because they capture key aspects of granular media while allowing systematic control of the packing fraction (the ratio of solid to pore space).  
 
 To extend the diversity of microstructures, we also generated the following shapes:  
 - 2D: circles, rectangles, ellipses, triangles  
@@ -23,7 +22,7 @@ To extend the diversity of microstructures, we also generated the following shap
 
 These shapes were constructed by inscribing each particle within a circle or sphere, ensuring that the packings remain non-overlapping and directly comparable across different geometries.  
 
-This approach enables a consistent study of how particle shape, in addition to packing density, influences both Minkowski functionals and macroscopic transport properties such as permeability and tortuosity.  
+This approach enables a consistent study of how particle shape, in addition to packing density, influences both Minkowski functionals and macroscopic transport properties such as permeability and tortuosity.  d
 
 The dataset is designed to explore the relationship between microstructural features and macroscopic transport properties, with controlled variation in:  
 - Particle shape: circles, rectangles, ellipses, triangles (2D), pyramids and boxes (3D)  
@@ -36,11 +35,11 @@ The dataset is designed to explore the relationship between microstructural feat
     <img src="Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png" width="350" /> 
   </p>
   <figcaption align="center">
-    Example microstructures: (left) random packing of circular particles, (right) cemented configuration with reduced connectivity.
+    Example microstructures: (left) random packing of circular particles, (right) cemented configuration.
   </figcaption>
 </figure>
-
-
+ 
+ 
 This repository contains both the data and the scripts used for generation and analysis.
 
 ## Dataset structure
@@ -51,19 +50,22 @@ RockMicro_Minkowskis/
 │   ├── cemented/                              # Cemented configurations 
 │       ├── 2D/                                # In two dimensions
 │           ├── blob_images/                   # Data to (re)create the blobbed images
-│           ├── simulation_results/            # The results of the simulations of the hydraulic properties
+│           └── simulation_results/            # The results of the simulations of the hydraulic properties
+│
 │   └── random_packings/                       # Random particle packings (all shapes, packing fractions)
 │       ├── 2D/                                # In two dimensions
 │           ├── heterogeneous_diameter/        # Varying diameter over the structure
 │               ├── Circle_data/               # Data of the coordinates and radius of a random grid]
-│               ├── simulation_results/        
+│               └── simulation_results/  
+│      
 │           ├── homogeneous_diameter/          # Constant diameter over the structure
 │               ├── Circle_data/
 │               ├── circle_data_structured/    # Data of the coordinates and radius of the structured grid
+│               └── simulation_results/        
+│
+│       └── 3D/                                # In three dimensions
 │               ├── simulation_results/        
-│       ├── 3D/                                # In three dimensions
-│               ├── simulation_results/        
-│               ├── Sphere_data/               # Data of the hydraulic properties related to the circle data
+│               └── Sphere_data/               # Data of the hydraulic properties related to the circle data
 │
 ├── scripts/                                   # Python scripts for geometry generation and analysis
 │   ├── meshing.py
@@ -81,7 +83,8 @@ RockMicro_Minkowskis/
 The Python scripts rely on the following packages and dependencies:  
 - [PoreSpy](https://porespy.org/) – microstructure generation and analysis  
 - [Gmsh](https://gmsh.info/) – meshing of generated geometries  
-- [OpenMC](https://openmc.org/) – (used for geometry sampling / utilities)  
+- [OpenMC](https://openmc.org/) – (used for geometry sampling / utilities)
+- [tau] 
 - [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/) – data handling  
 
 For flow simulations, we use the [MOOSE framework](https://mooseframework.inl.gov/) to solve the incompressible Stokes equations on the generated meshes.  
