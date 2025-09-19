@@ -9,7 +9,7 @@ image       = f'{output_path}/blobiness_{blobiness:.1f}_porosity_{porosity:.2f}.
 output_name = f'cemented_blobiness_{blobiness:.1f}_porosity_{porosity:.2f}'
 
 # Create the blobbed microstructure, inlcuding the effective porosity in an image
-Scripts.microstructures.Create_Blobs(porosity=0.3, blobiness=2, output_path='.', shape=[770,770])
+Scripts.microstructures.Create_Blobs(porosity=0.3, blobiness=2, output_path=output_path, shape=[770,770])
 Scripts.microstructures.create_effective_por(image)
 
 ## Run simulations in between

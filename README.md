@@ -1,4 +1,4 @@
-# ROCK MICROstructures and the MINKWOSKI functionals
+# ROCK MICROstructures and their MINKOWSKI functionals
 
 ## Description
 RockMicro_Minkowskis is an open-source database of generated rock microstructures with computed [Minkowski functionals](https://en.wikipedia.org/wiki/Minkowski_functional) and corresponding Stokes flow simulation results.

@@ -58,12 +58,6 @@ def ThreeD_Volume(outer_radius = 0.005):
         max_z = openmc.ZPlane(z0=1+outer_radius, boundary_type='reflective')
         region = +min_x & -max_x & +min_y & -max_y & +min_z & -max_z
         return region
-    
-#Create a Random Sphere Packing (RCP)
-def Random_Closed_Packing(path, name, region, seed, outer_radius = 0.005, pf = 0.62):
-        centers = openmc.model.pack_spheres(radius = outer_radius, region = region, pf = pf, seed=seed)
-        with open('%s/Sphere_data/%s_centers.txt' % (path, name), 'w') as output:
-            np.savetxt(output, centers)
 
 def Create_Blobs(porosity, blobiness, output_path, shape=[770, 770]):
     im = ps.generators.blobs(shape=shape, porosity=porosity, blobiness=blobiness)
