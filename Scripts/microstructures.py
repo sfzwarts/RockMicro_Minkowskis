@@ -6,6 +6,7 @@ import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import scipy
 
 # Image processing
 from skimage import io, color, measure
@@ -185,3 +186,19 @@ def binarize_image(image_path, threshold=0.5):
     binary = (image > threshold).astype(np.uint8) * 255 
     io.imsave(image_path, binary.astype(np.uint8), check_contrast=False)
     print(f"Binarized and saved: {image_path}")
+    
+def create_RP_porespy(path, seed, packing_fraction, radius, edges='extended', shape=[1000, 1000]):
+
+    spheres = ps.generators.random_spheres(shape=shape, r=radius, phi=packing_fraction, edges=edges, seed=seed)
+    spheres = spheres.astype(np.uint8)
+
+    labeled_spheres, num_features = scipy.ndimage.label(spheres)
+    props = ps.metrics.regionprops_3D(labeled_spheres)
+    coords = [(float(prop['centroid'][0]), float(prop['centroid'][1]), float(prop['centroid'][2]), radius) for prop in props]
+
+    name_txt = f'{path}/Model_{seed}_pf_{packing_fraction:1.3f}'
+    with open('%s.txt' %(name_txt), 'w') as f:
+        for coord in coords:
+            f.write(f"{float(coord[0])/shape[0]} {float(coord[1])/shape[0]} 0 0.005\n")
+        
+    print('Created  %s' %(name_txt))

@@ -1,5 +1,15 @@
 import sys, subprocess, os, runpy, csv, numpy as np
 from fileinput import filename
+import  sys, os
+import  pandas as pd
+import  porespy as ps
+import  numpy as np
+import  matplotlib.pyplot as plt
+import  matplotlib.image as mpimg
+from    skimage.measure import perimeter, perimeter_crofton, euler_number
+from    skimage import measure
+from    PIL import Image
+from    skimage import io
 
 def create_paraview_script(in_filename, output_name, pos_x, pos_y, n_points=100, read_exodus=True):
     ''' Convert exodus file to csv file using Paraview.
@@ -103,3 +113,40 @@ print("Succesfully created {output_name}_{index}.csv")
             '''.format(in_filename=in_filename, output_name=output_name, index=str(i).zfill(3),
                 pos_x=0.5-i*0.5/n_points, pos_y=0.5-i*0.5/n_points, length=i*1/n_points)
         f_com.write(command) #writing the actual python file with the text command
+        
+def Obtaining_properties(sample_image, axis=0):
+    image = f'{sample_image}'
+
+    # Check if the image file exists
+    if not os.path.isfile(image):
+        raise FileNotFoundError(f"Image file not found: {image}")
+
+    # Load and process the image
+    im          = io.imread(image, as_gray=True)
+    height, width = im.shape
+    binarized   = im > (150 / 255.0)
+    im_inv      = ~binarized
+    im_inverted = ~im.astype(bool)
+    
+    # Minkowski functionals
+    M0          = ps.metrics.porosity(binarized)
+    M1          = perimeter_crofton(im_inv, directions=4)
+    M3          = euler_number(im_inv, connectivity=1)
+
+    # Tortuosity
+    try:
+        result = ps.simulations.tortuosity_fd(im=binarized, axis=axis)
+        tau = result['tortuosity']
+    except Exception as e:
+        error_msg = str(e)
+        if (
+            "No pores remain after trimming floating pores" in error_msg or
+            "Solver failed to converge" in error_msg or
+            "exit code: 1000" in error_msg
+        ):
+            print(f"Warning: Tau computation failed for {sample_image}, setting tau = inf")
+            tau = np.inf
+        else:
+            raise  # Let other unexpected errors propagate
+    
+    return M0, M1, M3, tau

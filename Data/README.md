@@ -28,9 +28,8 @@ The folder structere is as follows in the database:
 ```
 
 In the database, the filenames of the random packings will have the following set up:
-
-- "Summary_{shape}_{packing_fraction}_extra_{shape_parameter}_beta_{beta_1}' 
-- Summary_{shape}_{packing_fraction}_extra1_{shape_parameter_1}_extra2_{shape_parameter_1}_beta1_{beta_1}_beta2_{beta_2}"
+- In 2D: `Summary_{shape}_{packing_fraction}_extra_{shape_parameter}_beta_{beta_1}`  
+- In 3D: `Summary_{shape}_{packing_fraction}_extra1_{shape_parameter_1}_extra2_{shape_parameter_2}_beta1_{beta_1}_beta2_{beta_2}`
 
 Which includes the following variables:
 - shape: different types of shapes in the circles
@@ -39,12 +38,12 @@ Which includes the following variables:
 - beta: the angle of rotation of each particle in radians
 
 e.g.: Filename example
-- Summary_circle_{packing_fraction}_extra_{shape_parameter}_beta_{beta_1}.csv
+- Summary_circle_0.310_extra_1.0_beta_r.csv
 
 
 <figure>
   <p float="left">
-    <img src="../Images/Fitting_shapes.png" width="700" />
+    <img src="../README_images/Fitting_shapes.png" width="700" />
   </p>
   <figcaption align="center">
     Visualisation of different grain shapes inscribed in the circle, at a certain rotation, here shown as beta_1 = 0, alligned with the flow direction
