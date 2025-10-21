@@ -1,0 +1,2 @@
+time,NumDofs,NumElems,area,gradPx_avg,gradPy_avg,integral_in,integral_out,mem,product_avg,product_int,velx_avg,velx_int,vely_avg,vely_int,vol
+0,0,0,127.1399178326,-1,4.4784076006624e-17,0,0,7756,0,0,0,0,0,0,0.85695309244352
