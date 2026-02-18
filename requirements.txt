@@ -1,0 +1,26 @@
+# The Python packages requirement for the generation of all the files:
+
+# Core scientific stack
+numpy>=1.23
+scipy>=1.9
+pandas>=1.5
+matplotlib>=3.6
+
+# Image processing / microstructure
+scikit-image>=0.20
+porespy>=2.3
+imageio>=2.25
+
+# Visualization / geometry
+pyvista>=0.40
+vtk>=9.2
+
+# Hydraulic Tortuosity
+taufactor>=0.1
+
+# Utilities
+tqdm>=4.60
+seaborn>=0.12
+
+# (optional) 3D packings
+openmc>=0.13
