@@ -85,7 +85,8 @@ The Python scripts rely on the following packages and dependencies:
 - [Gmsh](https://gmsh.info/) – meshing of generated geometries  
 - [OpenMC](https://openmc.org/) – (used for geometry sampling / utilities)
 - [tau] 
-- [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/) – data handling  
+- [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/) – data handling
+An exact list is shown in the requirements.txt file
 
 For flow simulations, we use the [MOOSE framework](https://mooseframework.inl.gov/) to solve the incompressible Stokes equations on the generated meshes.  
 Please, run the setup.sh bash file to unpack the zip files and create an .gitignore
