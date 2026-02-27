@@ -12,7 +12,7 @@
 [Mesh]
   [./mesh]
     type = FileMeshGenerator
-    file = Meshes/centers_0005_0002.msh
+    file = {mesh}
   [../]
   [./box]
     type = SubdomainBoundingBoxGenerator
@@ -227,37 +227,23 @@
     solve_type = 'NEWTON'
   [../]
   [./FSP]
-    # It is the starting point of splitting
     type = FSP
     petsc_options = '-ksp_converged_reason -snes_converged_reason'
     petsc_options_iname = '-snes_type -ksp_type -ksp_rtol -ksp_atol -ksp_max_it -snes_atol -snes_rtol -snes_max_it -snes_max_funcs'
     petsc_options_value = 'newtonls     fgmres     1e-2     1e-15       20       1e-9        1e-15       20           100000'
     topsplit = uv
     [./uv]
-      # Generally speaking, there are four types of splitting we could choose
-      # <additive,multiplicative,symmetric_multiplicative,schur>
-      # An approximate solution to the original system
-      # | A_uu  A_uv | | u | _ |f_u|
-      # |  0    A_vv | | v | - |f_v|
-      # is obtained by solving the following subsystems
-      # A_uu u = f_u and A_vv v = f_v
-      # If splitting type is specified as schur, we may also want to set more options to
-      # control how schur works using PETSc options
-      # multiplicative
       petsc_options_iname = '-pc_fieldsplit_schur_fact_type -pc_fieldsplit_schur_precondition'
       petsc_options_value = 'upper selfp'
       splitting = 'u v' # 'u' and 'v'
       splitting_type = schur
     [../]
     [./u]
-      # PETSc options for this subsolver
-      # A prefix will be applied, so just put the options for this subsolver only
       vars = 'vel_x vel_y'
       petsc_options_iname = '-pc_type -ksp_type -pc_hypre_type'
       petsc_options_value = '  hypre    preonly     boomeramg '
     [../]
     [./v]
-      # PETSc options for this subsolver
       vars = p
       petsc_options_iname = '-pc_type -ksp_type -sub_pc_type -sub_pc_factor_levels'
       petsc_options_value = '  jacobi  preonly        ilu            3'
@@ -273,14 +259,8 @@
   [../]
 []
 
-#[Problem]
-#  type = FEProblem
-#  material_coverage_check = false
-#  kernel_coverage_check = false
-#[]
-
 [Outputs]
-  file_base = perm_RCP_2D_r0005_0002_x
+  file_base = {output_name}
   csv = true
   exodus = true
   perf_graph = true

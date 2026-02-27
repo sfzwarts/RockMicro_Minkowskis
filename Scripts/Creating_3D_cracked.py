@@ -40,7 +40,6 @@ def generate_microstructures(shape, r, pf, model, mode, path):
     return coords
 
 
-
 def save_slice_png(coords_slice, Nx, Ny, filename, dpi):
     """
     coords_slice: list of (x, y, r_intersect)  → index removed

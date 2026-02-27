@@ -21,7 +21,7 @@
   [./image]
     input = generated
     type = ImageSubdomainGenerator
-    file = /path/to/file/
+    file = {image}
     threshold = 100
   [../]
   [./interface]
@@ -253,29 +253,6 @@
 []
 
 [Executioner]
-  # This is setup automatically in MOOSE (SetupPBPAction.C)
-  # petsc_options = '-snes_mf_operator'
-  # petsc_options_iname = '-pc_type'
-  # petsc_options_value =  'asm'
-  # petsc_options_iname = '-pc_type -pc_asm_overlap -sub_pc_type -sub_pc_factor_levels'
-  # petsc_options_value = 'asm      2               ilu          4'
-  # line_search = 'none'
-  # nl_rel_tol = 1e-12
-  # nl_abs_tol = 1e-13
-  # nl_max_its = 6
-  # l_tol = 1e-6
-  # l_max_its = 500
-  # Solver tolerances and iteration limits
-  # nl_rel_tol = 1e-8
-  # nl_abs_tol = 1e-12
-  # nl_max_its = 10
-  # l_tol = 1e-6
-  # l_max_its = 50 #10
-  # line_search = none
-  # # Options passed directly to PETSc
-  # petsc_options = '-snes_converged_reason -ksp_converged_reason '
-  # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package '
-  # petsc_options_value = 'lu NONZERO superlu_dist '
   type = Steady
 []
 
@@ -287,23 +264,13 @@
     solve_type = 'NEWTON'
   [../]
   [./FSP]
-    # It is the starting point of splitting
     type = FSP
     petsc_options = '-ksp_converged_reason -snes_converged_reason'
     petsc_options_iname = '-snes_type -ksp_type -ksp_rtol -ksp_atol -ksp_max_it -snes_atol -snes_rtol -snes_max_it -snes_max_funcs'
     petsc_options_value = 'newtonls     fgmres     1e-2     1e-15       200       1e-9        1e-15       200           100000'
     topsplit = uv
     [./uv]
-      # Generally speaking, there are four types of splitting we could choose
-      # <additive,multiplicative,symmetric_multiplicative,schur>
-      # An approximate solution to the original system
-      # | A_uu  A_uv | | u | _ |f_u|
-      # |  0    A_vv | | v | - |f_v|
-      # is obtained by solving the following subsystems
-      # A_uu u = f_u and A_vv v = f_v
-      # If splitting type is specified as schur, we may also want to set more options to
-      # control how schur works using PETSc options
-      # multiplicative
+      
       petsc_options_iname = '-pc_fieldsplit_schur_fact_type -pc_fieldsplit_schur_precondition'
       petsc_options_value = 'upper selfp'
       splitting = 'u v' # 'u' and 'v'
@@ -332,14 +299,9 @@
     petsc_options_value = 'gmres        asm        1E-8      1E-15        200        100         1e-8        lu                   NONZERO'
   [../]
 []
-#[Problem]
-#  type = FEProblem
-#  material_coverage_check = false
-#  kernel_coverage_check = false
-#[]
 
 [Outputs]
-  file_base = perm_RCP_2D_r0005_0002_x #output, check the file directory and name, generates an 'out'.e
+  file_base = {output_name}
   csv = true
   exodus = true
   perf_graph = true

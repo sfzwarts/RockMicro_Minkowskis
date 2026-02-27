@@ -1,6 +1,6 @@
 import sys, subprocess, os, runpy, csv, numpy as np
 from fileinput import filename
-import  sys, os
+import  sys, os, math
 import  pandas as pd
 import  porespy as ps
 import  numpy as np
@@ -150,3 +150,8 @@ def Obtaining_properties(sample_image, axis=0):
             raise  # Let other unexpected errors propagate
     
     return M0, M1, M3, tau
+
+def Average_diameter(FILE):
+    data = pd.read_csv(FILE, sep=" ", header=None)
+    data.columns = ['x', 'y', 'z', 'r']
+    return 2*data['r'].mean()
