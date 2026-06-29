@@ -1,0 +1,9 @@
+name: rockmicro
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - openmc>=0.15
+  - pip
+  - pip:
+      - -e .[all,dev]

@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rockmicro-minkowskis"
+version = "1.0.0"
+description = "Generation and analysis tools for the RockMicro Minkowski-functionals dataset"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = "CC-BY-4.0"
+authors = [
+  {name = "Sijmen Zwarts"},
+  {name = "Winston Lindqwister"},
+  {name = "Martin Lesueur"},
+]
+keywords = ["digital rock physics", "Minkowski functionals", "porous media"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+  "ipython>=8,<10",
+  "matplotlib>=3.8,<4",
+  "meshio>=5.3,<6",
+  "numpy>=1.26,<3",
+  "pandas>=2.1,<4",
+  "pillow>=10,<13",
+  "porespy>=2.3,<3",
+  "scikit-image>=0.22,<1",
+  "scipy>=1.11,<2",
+]
+
+[project.optional-dependencies]
+mesh = ["gmsh>=4.11,<5"]
+visualization = ["pyvista>=0.43,<1", "vtk>=9.2"]
+research = ["taufactor>=1,<2"]
+all = [
+  "gmsh>=4.11,<5",
+  "pyvista>=0.43,<1",
+  "taufactor>=1,<2",
+  "vtk>=9.2",
+]
+dev = [
+  "build>=1.2,<2",
+  "pytest>=8,<10",
+  "ruff>=0.11,<1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"Simulation_files" = [
+  "Simulation_files/Navier-Stokes_FCP_2D_image_template.i",
+  "Simulation_files/Navier-Stokes_FCP_2D_mesh_template.i",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/rockmicro/meshing.py" = ["E741"]

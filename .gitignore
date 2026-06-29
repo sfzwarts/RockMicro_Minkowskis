@@ -1,8 +1,24 @@
-.vscode
+# Editors and operating systems
 .DS_Store
+.vscode/
+
+# Python
+.venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# Generated workflow outputs and extracted data
+outputs/
+tmp_paraview_dir/
+*.e
 *.png
 *.txt
 *.csv
-*.e
+
+# Generated MOOSE inputs
+Simulation_files/*_input.i

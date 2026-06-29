@@ -1,99 +1,147 @@
-# ROCK MICROstructures and their MINKOWSKI functionals
+# RockMicro Minkowski-functionals dataset
 
-## Description
-RockMicro_Minkowskis is an open-source database of generated rock microstructures with computed [Minkowski functionals](https://en.wikipedia.org/wiki/Minkowski_functional) and corresponding Stokes flow simulation results.
+[![DOI: paper](https://img.shields.io/badge/paper-10.1038%2Fs41597--026--07321--0-blue)](https://doi.org/10.1038/s41597-026-07321-0)
+[![DOI: dataset](https://zenodo.org/badge/DOI/10.5281/zenodo.18807579.svg)](https://doi.org/10.5281/zenodo.18807579)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
+[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-green.svg)](LICENSE)
 
-Minkowski functionals are a set of measures used to quantify the geometric and topological features of a microstructure. The different Minkowski functionals are shown in the image below, and consist of the porosity, surface area, mean curvature (for 3D structures) and Euler characteristic
+An open dataset and Python toolkit for studying relationships between idealized rock
+microstructures, Minkowski functionals, and hydraulic transport properties. This is the
+companion repository for **“Database of Generated Rock Microstructures and their
+Computed Geometrical and Hydraulic Properties”** (Zwarts, Lindqwister, and Lesueur,
+*Scientific Data*, 2026).
 
-<figure>
-  <p float="left">
-    <img src="README_images/Minkowski_functionals.png" width="700" />
-  </p>
-  <figcaption align="center">
-  </figcaption>
-</figure>
+<p align="center">
+  <img src="README_images/Minkowski_functionals.png" width="760" alt="Geometric interpretation of the Minkowski functionals">
+</p>
 
+## What is included
 
-The dataset includes random packings of particles, which serve as a canonical model for studying pore-scale structures. Random packings are widely used in digital rock physics because they capture key aspects of granular media while allowing systematic control of the packing fraction (the ratio of solid to pore space).  
+The dataset combines controlled synthetic geometries with steady incompressible Stokes-flow
+results. It contains:
 
-To extend the diversity of microstructures, we also generated the following shapes:  
-- 2D: circles, rectangles, ellipses, triangles  
-- 3D: spheres, boxes, pyramids  
+- 2D random packings with circular, elliptical, rectangular, and triangular grains;
+- homogeneous and heterogeneous particle-size distributions;
+- aligned and random grain orientations;
+- 3D sphere, ellipsoid, box, and pyramid packings;
+- cemented, channel-like microstructures generated with PoreSpy; and
+- porosity, interface measure, curvature (3D), Euler characteristic, tortuosity,
+  permeability, and flow-energy results.
 
-These shapes were constructed by inscribing each particle within a circle or sphere, ensuring that the packings remain non-overlapping and directly comparable across different geometries.  
+The controlled changes in packing fraction, shape, aspect ratio, and orientation broaden
+the sampled Minkowski-functional space and help separate their effects on transport.
 
-This approach enables a consistent study of how particle shape, in addition to packing density, influences both Minkowski functionals and macroscopic transport properties such as permeability and tortuosity.  d
+<p align="center">
+  <img src="Data/random_packings/2D/homogenous_diameter/circle_data_structured/Model_1_pf_0.380_circle_extra_1_beta_0.png" width="350" alt="Structured circular packing">
+  <img src="Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png" width="350" alt="Cemented microstructure">
+</p>
 
-The dataset is designed to explore the relationship between microstructural features and macroscopic transport properties, with controlled variation in:  
-- Particle shape: circles, rectangles, ellipses, triangles (2D), pyramids and boxes (3D)  
-- Packing fraction: systematically varied to capture pore-scale transitions  
-- Connectivity: cemented configurations are included to study reduced connectivity
+## Quick start
 
-<figure>
-  <p float="left">
-    <img src="Data/random_packings/2D/homogenous_diameter/Circle_data/Model_1_pf_0.380_circle_extra_1_beta_0.png" width="350" />
-    <img src="Data/cemented/2D/blob_images/blobiness_1.0_porosity_0.50.png" width="350" /> 
-  </p>
-  <figcaption align="center">
-    Example microstructures: (left) random packing of circular particles, (right) cemented configuration.
-  </figcaption>
-</figure>
- 
- 
-This repository contains both the data and the scripts used for generation and analysis.
+The code used for the paper targets Python 3.12. From the repository root:
 
-## Dataset structure
 ```bash
-RockMicro_Minkowskis/
-│
-├── data/                                      # Main dataset
-│   ├── cemented/                              # Cemented configurations 
-│       ├── 2D/                                # In two dimensions
-│           ├── blob_images/                   # Data to (re)create the blobbed images
-│           └── simulation_results/            # The results of the simulations of the hydraulic properties
-│
-│   └── random_packings/                       # Random particle packings (all shapes, packing fractions)
-│       ├── 2D/                                # In two dimensions
-│           ├── heterogeneous_diameter/        # Varying diameter over the structure
-│               ├── Circle_data/               # Data of the coordinates and radius of a random grid]
-│               └── simulation_results/  
-│      
-│           ├── homogeneous_diameter/          # Constant diameter over the structure
-│               ├── Circle_data/
-│               ├── circle_data_structured/    # Data of the coordinates and radius of the structured grid
-│               └── simulation_results/        
-│
-│       └── 3D/                                # In three dimensions
-│               ├── simulation_results/        
-│               └── Sphere_data/               # Data of the hydraulic properties related to the circle data
-│
-├── scripts/                                   # Python scripts for geometry generation and analysis
-│   ├── meshing.py
-│   ├── microstructures.py
-│   └── postprocessing.py
-│
-├── Simulation_files/                          # Example input files for Stokes flow simulations in MOOSE
-│   ├── stokes_input.i
-│   └── mesh_example.e
-│
-└── README.md                                  # This file
+bash setup.sh
+source .venv/bin/activate
+python examples/cemented.py
 ```
 
-## Software requirements
-The Python scripts rely on the following packages and dependencies:  
-- [PoreSpy](https://porespy.org/) – microstructure generation and analysis  
-- [Gmsh](https://gmsh.info/) – meshing of generated geometries  
-- [OpenMC](https://openmc.org/) – (used for geometry sampling / utilities)
-- [tau] 
-- [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/) – data handling
-An exact list is shown in the requirements.txt file
+Generated files go to `outputs/`, which Git ignores. To include Gmsh, PyVista, VTK, and
+TauFactor, use `bash setup.sh --all`.
 
-For flow simulations, we use the [MOOSE framework](https://mooseframework.inl.gov/) to solve the incompressible Stokes equations on the generated meshes.  
-Please, run the setup.sh bash file to unpack the zip files and create an .gitignore
+For the complete research environment, including OpenMC, use Conda or Mamba:
 
-## Contributing
-Currently, the main contributors are:
+```bash
+mamba env create -f environment.yml
+mamba activate rockmicro
+```
 
-- [S. Zwarts](https://scholar.google.com/citations?hl=en&user=tFDIX40AAAAJ)
-- [W. Lindqwister](https://scholar.google.com/citations?view_op=search_authors&mauthors=winston+lindqwister&hl=en&oi=ao)
-- [M. Lesueur](https://scholar.google.com/citations?hl=en&user=Rt6zNgkAAAAJ)
+OpenMC is kept in the Conda environment because its official distribution includes
+compiled libraries that are not installed by this project's normal `pip` workflow.
+
+### Unpack the coordinate archives
+
+The canonical particle-coordinate data are stored as ZIP archives. Extract them only when
+needed (the full unpacked dataset is large):
+
+```bash
+python tools/unpack_data.py
+```
+
+The command skips archives whose files are already present. Use `--force` to overwrite
+previously extracted content.
+
+## Common workflows
+
+Generate a small 2D packing:
+
+```bash
+python examples/random_packing.py
+python examples/random_packing.py --mesh  # requires the mesh extra
+```
+
+Compute properties for a binary image, where white is pore space and black is solid:
+
+```python
+from rockmicro.postprocessing import compute_properties
+
+m0, m1, m3, tortuosity = compute_properties("path/to/microstructure.png")
+```
+
+The files in `Simulation_files/` are templates for MOOSE. MOOSE itself is external
+simulation software and is not installed into the Python environment. Configure a valid
+MOOSE executable before using `rockmicro.moose.run_simulation_image` or
+`run_simulation_mesh`.
+
+## Repository layout
+
+```text
+.
+├── Data/                 Published microstructures and simulation results
+├── Simulation_files/     MOOSE input files and renderable templates
+├── README_images/        Figures used by the documentation
+├── examples/             Small, runnable workflow examples
+├── src/rockmicro/        Installable Python package
+├── tests/                Fast package and template tests
+├── tools/                Dataset maintenance utilities
+├── environment.yml       Full Conda environment (including OpenMC)
+└── pyproject.toml        Python package metadata and pip dependencies
+```
+
+The `Data/` layout is intentionally preserved to remain compatible with the published
+dataset and paper. Its historical directory name `homogenous_diameter` is therefore not
+renamed. See [Data/README.md](Data/README.md) for the complete schema and column guide.
+
+## Reproducibility and development
+
+```bash
+pytest
+ruff check src tests examples tools
+```
+
+The continuous-integration workflow runs these checks with Python 3.12. Contributions are
+welcome; please read [CONTRIBUTING.md](CONTRIBUTING.md) before adding generated data.
+
+## Citation
+
+If you use the dataset or code, cite both the article and archived dataset:
+
+> Zwarts, S., Lindqwister, W., & Lesueur, M. (2026). Database of Generated Rock
+> Microstructures and their Computed Geometrical and Hydraulic Properties.
+> *Scientific Data*. <https://doi.org/10.1038/s41597-026-07321-0>
+
+> Zwarts, S. (2026). RockMicro Minkowskis: First release of database. Zenodo.
+> <https://doi.org/10.5281/zenodo.18807579>
+
+Machine-readable citation metadata are provided in [CITATION.cff](CITATION.cff).
+
+## License
+
+The repository is distributed under the [Creative Commons Attribution 4.0 International
+license](LICENSE). Please retain attribution when reusing the data or code.
+
+## Authors
+
+- [Sijmen Zwarts](https://scholar.google.com/citations?user=tFDIX40AAAAJ)
+- [Winston Lindqwister](https://scholar.google.com/citations?view_op=search_authors&mauthors=winston+lindqwister)
+- [Martin Lesueur](https://scholar.google.com/citations?user=Rt6zNgkAAAAJ)

@@ -1,28 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-echo "Unpacking all .zip files"
-for file in $(find . -name "*.zip"); do
-    unzip -o "$file" -d "$(dirname "$file")" >/dev/null
+python_command="${PYTHON:-python3.12}"
+venv_dir="${VENV_DIR:-.venv}"
+install_target=".[dev]"
+unpack_data=false
+
+for argument in "$@"; do
+  case "$argument" in
+    --all) install_target=".[all,dev]" ;;
+    --data) unpack_data=true ;;
+    -h|--help)
+      echo "Usage: ./setup.sh [--all] [--data]"
+      echo "  --all   include Gmsh, PyVista, VTK, and TauFactor"
+      echo "  --data  unpack archived coordinate data after installation"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $argument" >&2
+      exit 2
+      ;;
+  esac
 done
-echo "Done unpacking."
 
-echo "Checking for .gitignore file"
-if [ ! -f .gitignore ]; then
-    echo ".gitignore file not found, creating one"
-    cat > .gitignore <<EOL
-*.csv
-.DS_Store
-__pycache__/
-*.pyc
-EOL
-else
-    echo ".gitignore found."
-    for pattern in "*.csv" ".DS_Store" "__pycache__/" "*.pyc"; do
-        if ! grep -qxF "$pattern" .gitignore; then
-            echo "Adding missing pattern: $pattern"
-            echo "$pattern" >> .gitignore
-        fi
-    done
+if ! command -v "$python_command" >/dev/null 2>&1; then
+  echo "Python 3.12 is required. Set PYTHON to a compatible interpreter." >&2
+  exit 1
 fi
 
-echo "Setup complete!"
+"$python_command" -m venv "$venv_dir"
+"$venv_dir/bin/python" -m pip install --upgrade pip
+"$venv_dir/bin/python" -m pip install -e "$install_target"
+
+if "$unpack_data"; then
+  "$venv_dir/bin/python" tools/unpack_data.py
+fi
+
+echo "Environment ready. Activate it with: source $venv_dir/bin/activate"

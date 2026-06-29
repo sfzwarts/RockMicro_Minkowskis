@@ -1,4 +1,11 @@
-import gmsh, numpy as np, random
+"""Gmsh-based mesh generation for two- and three-dimensional packings."""
+
+import random
+from pathlib import Path
+
+import gmsh
+import numpy as np
+
 
 def Model_gmsh(path, path_data, name, resolution, shape='circle', phi=0.785, hl_ratio=1, size=100, beta=0, random_beta='no', cores=20, r_threshold=None):
     """
@@ -16,6 +23,12 @@ def Model_gmsh(path, path_data, name, resolution, shape='circle', phi=0.785, hl_
     random_beta (='no') = Random rotation of each shape in the microstructure (set to yes)
     """
     
+    path = Path(path)
+    path_data = Path(path_data)
+    data_file = path_data / f"{name}.txt"
+    if not data_file.is_file():
+        raise FileNotFoundError(f"Particle coordinate file not found: {data_file}")
+
     gmsh.initialize()
     gmsh.model.add("Random_packing")
     #gmsh.option.setNumber("General.NumThreads", cores)
@@ -27,7 +40,9 @@ def Model_gmsh(path, path_data, name, resolution, shape='circle', phi=0.785, hl_
     size_big = 5                #Ratio of the bigger element size compared to the smaller ones
     distance_max = 3            #Maximum distance of the transition field between large elements and small elements
     distance_min = 2            #Minimum distance of the transition field between large elements and small elements
-    shapes = np.genfromtxt('%s/%s.txt' % (path_data, name))
+    shapes = np.genfromtxt(data_file)
+    if shapes.size:
+        shapes = np.atleast_2d(shapes)
 
     #Inlcude all the shapes, create shape, add loop and surface to make them 2D for cutting them later
     c, w, s = [], [], []
@@ -38,7 +53,7 @@ def Model_gmsh(path, path_data, name, resolution, shape='circle', phi=0.785, hl_
     else:
         beta = float(beta)
     
-    if len(shapes) == 0:
+    if shapes.size == 0:
         r = gmsh.model.occ.addRectangle(index,index,0,(Size-2*index),(Size-2*index))
         gmsh.model.occ.synchronize()
         
@@ -134,7 +149,7 @@ def Model_gmsh(path, path_data, name, resolution, shape='circle', phi=0.785, hl_
         
         #Create the rectangle,
         r = gmsh.model.occ.addRectangle(index,index,0,(Size-2*index),(Size-2*index))
-        b = gmsh.model.occ.cut([(2,r)], [(2,elt) for elt in s])
+        gmsh.model.occ.cut([(2,r)], [(2,elt) for elt in s])
         gmsh.model.occ.synchronize()
 
         #Identify all the entitites
@@ -195,12 +210,15 @@ def Model_gmsh(path, path_data, name, resolution, shape='circle', phi=0.785, hl_
             
     #Generate and save mesh
     gmsh.model.mesh.generate()
+    mesh_dir = path / "Meshes" / "Meshes_porespy"
+    mesh_dir.mkdir(parents=True, exist_ok=True)
     if shape == 'triangle':
-        mesh_name = f'{path}/Meshes/Meshes_porespy/{name}_{shape}_{str(phi)}_r_{str(beta)}_res_{str(resolution)}_mesh_2d.msh'
+        mesh_name = mesh_dir / f'{name}_{shape}_{str(phi)}_r_{str(beta)}_res_{str(resolution)}_mesh_2d.msh'
     else:
-        mesh_name = f'{path}/Meshes/Meshes_porespy/{name}_{shape}_{str(hl_ratio)}_r_{str(beta)}_res_{str(resolution)}_mesh_2d.msh'
-    gmsh.write(mesh_name)
+        mesh_name = mesh_dir / f'{name}_{shape}_{str(hl_ratio)}_r_{str(beta)}_res_{str(resolution)}_mesh_2d.msh'
+    gmsh.write(str(mesh_name))
     gmsh.finalize()
+    return mesh_name
 
 def Model_gmsh_3D(path, name, resolution, cores=1, shape='sphere', phi=0.785, hl_ratio=1, wl_ratio=1, size=100, beta_1=0, beta_2=0, random_beta='no'):
     """
@@ -218,6 +236,7 @@ def Model_gmsh_3D(path, name, resolution, cores=1, shape='sphere', phi=0.785, hl
     random_beta: str ('yes'/'no'), whether to apply random rotation
     """
     
+    path = Path(path)
     gmsh.initialize()
     gmsh.model.add("Random_packing_3D")
     gmsh.option.setNumber("General.NumThreads", cores)
@@ -226,7 +245,9 @@ def Model_gmsh_3D(path, name, resolution, cores=1, shape='sphere', phi=0.785, hl
     Epsilon = 1e-5
     index   = (100 - size) / 100 / 2
     
-    shapes  = np.genfromtxt(f'{path}/Microstructures/Sphere_data_organised/{name}.txt')
+    shapes = np.atleast_2d(
+        np.genfromtxt(path / "Microstructures" / "Sphere_data_organised" / f"{name}.txt")
+    )
     volumes = []
     j       = -1
     
@@ -269,7 +290,7 @@ def Model_gmsh_3D(path, name, resolution, cores=1, shape='sphere', phi=0.785, hl
                         a = hl_ratio   # x semi-axis
                         b = wl_ratio   # y semi-axis
                         Temp_sphere = gmsh.model.occ.addSphere(x_0, y_0, z_0, r)
-                        Temp_ellipsoid = gmsh.model.occ.dilate([(3, Temp_sphere)], x_0, y_0, z_0, 1, a, b)
+                        gmsh.model.occ.dilate([(3, Temp_sphere)], x_0, y_0, z_0, 1, a, b)
                         volumes.append(Temp_sphere)
                         
                     # Pyramid
@@ -378,5 +399,12 @@ def Model_gmsh_3D(path, name, resolution, cores=1, shape='sphere', phi=0.785, hl
     # Generate and save mesh
     gmsh.model.occ.synchronize()
     gmsh.model.mesh.generate(3)
-    gmsh.write('%s/Meshes/Meshes_porespy/%s_%s_b1_%1.1f_b2_%1.1f_res_%s_mesh_3d.msh' %(path, name, shape, float(beta_1), float(beta_2), str(resolution)))
+    mesh_dir = path / "Meshes" / "Meshes_porespy"
+    mesh_dir.mkdir(parents=True, exist_ok=True)
+    mesh_name = mesh_dir / (
+        f"{name}_{shape}_b1_{float(beta_1):1.1f}_b2_{float(beta_2):1.1f}_"
+        f"res_{resolution}_mesh_3d.msh"
+    )
+    gmsh.write(str(mesh_name))
     gmsh.finalize()
+    return mesh_name

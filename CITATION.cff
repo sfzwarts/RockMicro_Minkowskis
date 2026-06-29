@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this dataset or code, please cite the article and Zenodo release."
+title: "RockMicro Minkowskis: Database of generated rock microstructures"
+type: dataset
+version: 1.0.0
+authors:
+  - family-names: Zwarts
+    given-names: Sijmen
+  - family-names: Lindqwister
+    given-names: Winston
+  - family-names: Lesueur
+    given-names: Martin
+doi: 10.5281/zenodo.18807579
+repository-code: "https://github.com/sfzwarts/RockMicro_Minkowskis"
+url: "https://doi.org/10.5281/zenodo.18807579"
+license: CC-BY-4.0
+preferred-citation:
+  type: article
+  title: "Database of Generated Rock Microstructures and their Computed Geometrical and Hydraulic Properties"
+  authors:
+    - family-names: Zwarts
+      given-names: Sijmen
+    - family-names: Lindqwister
+      given-names: Winston
+    - family-names: Lesueur
+      given-names: Martin
+  journal: Scientific Data
+  year: 2026
+  doi: 10.1038/s41597-026-07321-0

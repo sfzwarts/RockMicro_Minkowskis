@@ -1,9 +1,12 @@
-import porespy as ps
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-import numpy as np
-import scipy.ndimage
+"""Generate a 3D sphere packing and export analytical 2D slices."""
+
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+import porespy as ps
+import scipy.ndimage
+from matplotlib.patches import Circle
 
 
 def generate_microstructures(shape, r, pf, model, mode, path):
@@ -12,30 +15,31 @@ def generate_microstructures(shape, r, pf, model, mode, path):
     coordinates to a TXT file.
     """
     spheres = ps.generators.random_spheres(
-        shape=shape,
+        shape,
         r=r,
-        phi=pf,
+        volume_fraction=pf,
         edges=mode,
-        seed=int(model)
+        seed=int(model),
     ).astype(np.uint8)
 
     labeled_spheres, num_features = scipy.ndimage.label(spheres)
     props = ps.metrics.regionprops_3D(labeled_spheres)
 
     coords = [
-        (float(prop["centroid"][0]),
+        (idx,
+         float(prop["centroid"][0]),
          float(prop["centroid"][1]),
          float(prop["centroid"][2]),
          r)
-        for prop in props
+        for idx, prop in enumerate(props, start=1)
     ]
 
     os.makedirs(path, exist_ok=True)
     name_txt = f"{path}/Model_{int(model)}_pf_{pf:1.3f}.txt"
 
     with open(name_txt, "w") as f:
-        for idx, c in enumerate(coords, start=1):
-            f.write(f"{idx} {c[0]} {c[1]} {c[2]} {c[3]}\n")
+        for idx, x, y, z, radius in coords:
+            f.write(f"{idx} {x} {y} {z} {radius}\n")
 
     return coords
 
@@ -131,15 +135,15 @@ if __name__ == "__main__":
     print("Starting Creating Microstructures + Analytic Slicing")
 
     r = 2
-    shape = np.array([100, 100, 250])
+    shape = np.array([64, 64, 64])
     mode = 'extended'
-    path = os.getcwd()
+    path = os.path.join("outputs", "3d_slices")
 
-    pfs = [0.60]
+    pfs = [0.35]
     models = np.arange(1, 2)
 
-    scan_res_high = 0.05
-    scan_res_low  = 0.50
+    scan_res_high = 1.0
+    scan_res_low  = 2.0
 
     for model in models:
         for pf in pfs:
